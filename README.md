@@ -1,98 +1,128 @@
-## 📚 Case Study: Eliminating Manual Financial Reporting With a Scalable Data Lake Pipeline
+# 🏦 Case Study: Eliminating Manual Financial Reporting With a Scalable Data Lake Pipeline  
+**Enterprise ETL System for Automated Financial Analytics & KPI Standardization**
 
-### ✅ Scenario
-A finance department at a mid-sized organization struggles with reporting delays and inconsistent financial metrics.  
-Each month, analysts spend **4–6 hours manually pulling CSVs**, merging spreadsheets, and recalculating KPIs.  
-Common issues include:
+## ✅ Executive Summary  
+The finance organization of a mid-sized company struggled with slow, inconsistent reporting.  
+Analysts spent **4–6 hours every month** manually pulling CSVs, merging spreadsheets, and recalculating KPIs—leading to:
 
-- Conflicting revenue totals across teams  
+- Conflicting revenue totals across business units  
 - Delayed month-end close  
-- No single source of truth for KPIs  
-- Inability to drill into trends without re-running manual Excel steps  
+- No single source of truth for financial KPIs  
+- Limited drill-down capability without rebuilding spreadsheets  
 
-Leadership wants a **fully automated data pipeline** to deliver reliable financial analytics without repeated spreadsheet work.
+To solve this, a fully automated **Financial Data Lake + ETL Pipeline** was engineered, replacing all manual steps and enabling real-time, repeatable analytics.
 
 ---
 
-### ✅ Step 1 — Data Ingestion Into the Data Lake
-All incoming financial files (transactions, GL data, expense logs, forecast inputs) are routed into the data lake’s **raw zone (S3)**.
+# ✅ Step 1 — Financial Data Ingestion Into the Data Lake (Raw Zone)
 
-**ETL Improvements:**
-- Standard file naming enforced  
-- Metadata tagging added for source tracking  
-- Automated load scripts replace manual file drops  
+All incoming financial data—GL extracts, transactions, expense logs, forecast submission files—are automatically routed into the **S3 raw zone**.
 
-**Pipeline Summary View**  
+### ✅ ETL Enhancements  
+- Enforced standardized file naming conventions  
+- Automated ingestion scripts replaced manual file drops  
+- Metadata tagging for traceability and audit readiness  
+- Timestamped storage ensures historical integrity  
+
+### 📊 Pipeline Summary View  
 ![Financial BI Dashboard Summary](https://github.com/YSayaovong/financial-data-engineering-etl-pipeline/blob/main/Screenshots/ETL-Financial-BI-Dashboard-Summary.png)
 
-This ensures consistent, timestamped ingestion of all finance datasets.
+This ensures consistent, traceable ingestion for all financial datasets required for reporting and forecasting.
 
 ---
 
-### ✅ Step 2 — Transformation Using Apache Spark
-The transformation layer cleans and enriches the raw data:
+# ✅ Step 2 — Transformation Layer Using Apache Spark
 
-- Schema alignment across monthly files  
-- Handling of null/invalid records  
-- Joins for revenue, cost, and product hierarchies  
-- Time-series rollups (MOM, YOY, QTD, YTD)  
-- Deduplication and type enforcement  
+Spark processes the raw files and transforms them into fully curated financial datasets.
 
-**ETL KPI Flow**  
+### ✅ Transformation Logic  
+- Schema alignment across months and departments  
+- Cleansing invalid/empty records  
+- Hierarchical joins (Revenue ↔ Cost ↔ Product ↔ GL ↔ Cost Center)  
+- Time-series rollups: **MoM, YoY, QTD, YTD**  
+- Deduplication and strict data type enforcement  
+
+### 📈 ETL KPI Flow  
 ![ETL KPI Flow](https://github.com/YSayaovong/financial-data-engineering-etl-pipeline/blob/main/Screenshots/financial_etl_kpi.PNG)
 
-Spark pushes these curated datasets into the **analytics zone**, ready for BI consumption.
+These curated tables populate the **analytics zone**, ready for consumption by downstream BI tools.
 
 ---
 
-### ✅ Step 3 — KPI Modeling & Data Quality Enforcement
-The pipeline computes standardized financial metrics:
+# ✅ Step 3 — KPI Modeling & Automated Data Quality Enforcement  
 
-- Revenue, COGS, Gross Margin  
+After transformation, the pipeline computes standardized financial KPIs used across FP&A and Accounting:
+
+### ✅ Standard Financial Metrics  
+- Revenue  
+- COGS  
+- Gross Margin  
 - Operating Expenses (OPEX)  
 - Net Income  
-- Variance vs Forecast  
-- Rolling 12-month trends  
+- Forecast vs Actual Variance  
+- Rolling 12-Month Trends  
 
-Data quality checks automatically flag:
+### ✅ Data Quality Monitoring  
+The pipeline automatically flags:
 
-- Negative revenue  
-- Invalid GL codes  
-- Missing cost centers  
-- Forecast mismatches  
+- Negative or inconsistent revenue  
+- Invalid GL accounts  
+- Missing cost center mappings  
+- Forecast misalignments  
+- Duplicate month entries  
 
-**KPI Summary Model**  
+### 📊 KPI Summary Model  
 ![KPI Summary](https://github.com/YSayaovong/financial-data-engineering-etl-pipeline/blob/main/Screenshots/kpi_summary.PNG)
 
-Analysts no longer waste time validating spreadsheets or cleaning mismatched files.
+Finance teams no longer waste time reconciling mismatched spreadsheets.
 
 ---
 
-### ✅ Step 4 — BI Delivery in Power BI
-Curated datasets feed a Power BI model delivering:
+# ✅ Step 4 — BI Delivery Through Power BI  
 
-- Executive financial summary  
-- Revenue & expense trends  
-- KPI variance visuals  
+Curated datasets feed into a Power BI financial model that provides:
+
+### ✅ Executive-Level Reporting  
+- Revenue & expense trendlines  
+- Gross margin KPIs  
+- Forecast vs actual analysis  
 - Department-level drill-downs  
-- Forecast vs Actual comparisons  
+- Month-to-date & quarter-to-date performance  
+- Automated variance visuals  
 
-The dashboard refreshes automatically on a schedule.
+The dashboard refreshes daily, giving leadership near real-time visibility.
 
-**Power BI Dashboard Output**  
+### 📊 Power BI Dashboard Output  
 ![Power BI Dashboard](https://github.com/YSayaovong/financial-data-engineering-etl-pipeline/blob/main/Screenshots/power_bi.PNG)
 
-Finance leadership receives **daily refreshed metrics** instead of end-of-month delays.
+---
+
+# ✅ Step 5 — Business Impact  
+
+After one quarter of adopting the automated financial pipeline:
+
+- ✅ Manual reporting time decreased **by 80%**  
+- ✅ KPIs became standardized across Accounting, Finance, and FP&A  
+- ✅ Month-end close accelerated  
+- ✅ CFO gained same-day insight into financial performance  
+- ✅ Analysts focused on strategy instead of spreadsheet processing  
+- ✅ Data lake became the backbone for reporting, forecasting, and audit support  
+
+This ETL pipeline now serves as the company’s **financial analytics operating system**, enabling reliable, consistent, and scalable financial reporting.
 
 ---
 
-### ✅ Step 5 — Outcomes
-After one quarter of using the automated pipeline:
+# ✅ Tools & Technologies  
+- AWS S3 (Data Lake Raw & Analytics Zones)  
+- Apache Spark (ETL Transformation)  
+- Python (Data Processing Logic)  
+- Power BI (Executive Dashboards)  
+- Financial Modeling (Variance, Margin, Trend Analysis)  
+- Git/GitHub for version control  
 
-- Manual reporting time dropped by **80%**  
-- All KPIs became consistent across finance, FP&A, and accounting  
-- CFO gained same-day visibility into month-to-date performance  
-- Analysts shifted from data cleanup to strategic, forward-looking analysis  
-- Month-end close accelerated due to consistent, trustworthy datasets  
+---
 
-The data lake + ETL pipeline now functions as the organization’s **financial analytics backbone**, supporting reporting, forecasting, audits, and executive decision-making.
+# ✅ Summary  
+This project demonstrates how an engineered data lake pipeline can modernize financial reporting by automating ingestion, enforcing data integrity, and delivering real-time dashboards.  
+The result is a scalable architecture that replaces error-prone spreadsheets with a controlled, enterprise-grade financial analytics environment.
+
