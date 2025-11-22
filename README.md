@@ -1,65 +1,171 @@
-# Enterprise Financial Data Lake ETL
 
-A Dockerized **financial data ingestion service** that pulls multi-year historical price data from **Yahoo Finance**, normalizes it, and loads it into a **PostgreSQL data lake**.
+# Enterprise Financial Data Lake ETL  
+**Data Engineering + Data Analytics Project**
 
-This project is designed to look and feel like a real-world **data engineering / backend** system: config-driven, containerized, testable, and ready to be wired into dashboards or downstream analytics.
-
----
-
-## What This Service Does
-
-- Ingests 5 years of daily OHLCV (Open, High, Low, Close, Volume) data  
-- Pulls data for multiple tickers from Yahoo Finance  
-- Normalizes raw API responses into a clean relational schema  
-- Loads data into PostgreSQL via SQLAlchemy  
-- Runs as a Docker Compose stack (`db` + `etl` services)  
-- Ensures tables are created automatically on startup  
-- Idempotent ingestion (no duplicates on re-run)
+This project is a fully containerized **Financial Data Lake ETL pipeline** designed for real-world data engineering workflows.  
+It extracts historical stock data from Yahoo Finance, transforms it into analytics‑ready tables, and loads it into a PostgreSQL data lake.  
+A full **Power BI Analytics Dashboard** visualizes KPIs, trends, and investment insights based on the processed data.
 
 ---
 
-## Tech Stack
+## 🚀 Project Architecture
 
-- Python 3  
-- yfinance  
-- pandas  
+The system is built using a modular ETL architecture:
+
+1. **Extract**  
+   - Uses Yahoo Finance API via `yfinance`  
+   - Pulls 5 years of daily historical data for multiple tickers  
+   - Saves raw data into structured Python objects
+
+2. **Transform**  
+   - Cleans, standardizes, and validates datasets  
+   - Renames fields, enforces schema, ensures proper typing  
+   - Maps tickers to instrument IDs
+
+3. **Load**  
+   - Persists clean datasets into PostgreSQL  
+   - Two key fact/dimension tables:
+     - `instruments`
+     - `daily_prices`
+
+4. **Analytics Layer**
+   - Power BI connects directly to PostgreSQL
+   - KPI metrics and trend reports generated with DAX
+
+---
+
+## 🧱 System Diagram
+
+![System Diagram](https://github.com/YSayaovong/enterprise-financial-data-lake-etl/blob/main/assets/ETL-Financial-BI-Dashboard-Summary.png?raw=true)
+
+This diagram represents the full data flow:
+- External data source → Python ETL → Postgres Data Lake → Power BI Dashboard
+
+---
+
+## 📊 Database Tables
+
+### **Instruments Table**
+Stores master metadata about each tracked financial instrument.
+
+![Instruments Table](https://github.com/YSayaovong/enterprise-financial-data-lake-etl/blob/main/assets/instrument.PNG?raw=true)
+
+---
+
+### **Daily Prices Table**
+Stores per‑day OHLCV financial data for each instrument.
+
+![Daily Prices Table](https://github.com/YSayaovong/enterprise-financial-data-lake-etl/blob/main/assets/daily.PNG?raw=true)
+
+---
+
+### **SQL View of Tables**
+A snapshot of the PostgreSQL schema and row-level data:
+
+![SQL Table Preview](https://github.com/YSayaovong/enterprise-financial-data-lake-etl/blob/main/assets/sql_table.PNG?raw=true)
+
+---
+
+## 📈 Analytics & Power BI Dashboard
+
+A complete investment analytics dashboard was developed using Power BI.
+
+It features:
+- Multi‑year trend analysis  
+- Key performance indicators (KPIs)  
+- OHLC trends  
+- Volume‑based volatility insights  
+- Cross‑instrument comparisons  
+
+### **KPI Summary**
+![KPI Summary](https://github.com/YSayaovong/enterprise-financial-data-lake-etl/blob/main/assets/kpi_summary.PNG?raw=true)
+
+### **Power BI Dashboard Overview**
+![Power BI Dashboard](https://github.com/YSayaovong/enterprise-financial-data-lake-etl/blob/main/assets/power_bi.PNG?raw=true)
+
+---
+
+## 🛠 Tech Stack
+
+**Languages & Tools**  
+- Python  
+- PostgreSQL  
+- Docker & Docker Compose  
+- Power BI  
+- Pandas  
 - SQLAlchemy  
-- PostgreSQL 16  
-- Pydantic  
-- Docker / Docker Compose  
+- YFinance  
+
+**Engineering Concepts Used**  
+- Modular ETL pipeline design  
+- Data normalization  
+- Database schema modeling  
+- Batch processing  
+- Data quality validation  
+- Dockerized development environments  
+- Business intelligence reporting  
 
 ---
 
-## Project Structure
+## 🧩 How to Run the ETL Pipeline
 
-enterprise-financial-data-lake-etl/  
-├─ etl/  
-│  ├─ core/  
-│  ├─ db/  
-│  ├─ pipelines/yahoo/  
-│  ├─ run_pipeline.py  
-│  └─ settings.py  
-├─ Dockerfile  
-├─ docker-compose.yml  
-├─ requirements.txt  
-├─ .env  
-└─ README.md  
+### 1. Start Docker
+```sh
+docker compose up --build
+```
 
----
-
-## Running the Pipeline
-
-docker compose down  
-docker compose up --build  
-
----
-
-## Querying the Database
-
+### 2. Connect to Postgres
+```sh
 docker exec -it enterprise-financial-data-lake-etl-db-1 psql -U finance -d finance_lake
+```
+
+### 3. Run ETL Pipeline
+The pipeline runs automatically on container startup, fetching:
+```
+AAPL, MSFT, GOOG, AMZN, META, TSLA
+```
+
+### 4. Refresh Power BI Dashboard  
+Connect Power BI to:
+```
+Host: localhost
+Port: 5432
+Database: finance_lake
+User: finance
+Password: finance
+```
 
 ---
 
-## License
+## 📥 Data Sources
+- **Yahoo Finance API**  
+Used for historical OHLCV data.
 
-MIT or your choice.
+---
+
+## ⭐ Why This Project Matters
+
+This project demonstrates your ability to work as both a **Data Engineer and Data Analyst** by combining:
+
+✔ robust ETL architecture  
+✔ clean SQL database modeling  
+✔ automated pipelines  
+✔ visualization and BI storytelling  
+✔ containerized deployment  
+
+It matches real enterprise data engineering workflows and shows full‑stack analytics capability from ingestion to insights.
+
+---
+
+## 📌 Future Enhancements
+- Add pipeline scheduling using Airflow  
+- Expand instruments to crypto, ETFs, and forex  
+- Add anomaly detection models  
+- Implement slowly changing dimensions (SCD)  
+- Deploy dashboard to Power BI Service
+
+---
+
+## 📬 Contact  
+If you want this packaged for portfolio presentation or recruiter optimization, just ask—easy upgrade.
+
