@@ -1,78 +1,65 @@
 # Enterprise Financial Data Lake ETL
 
-This project builds a scalable ETL (Extract-Transform-Load) pipeline and data lake architecture tailored for large-scale financial datasets. It demonstrates data engineering, data lake design, and pipeline orchestration.
+A Dockerized **financial data ingestion service** that pulls multi-year historical price data from **Yahoo Finance**, normalizes it, and loads it into a **PostgreSQL data lake**.
+
+This project is designed to look and feel like a real-world **data engineering / backend** system: config-driven, containerized, testable, and ready to be wired into dashboards or downstream analytics.
 
 ---
 
-## Overview
+## What This Service Does
 
-The project enables enterprise-grade data processing for financial systems: ingesting raw financial data, applying transformations, organizing storage zones, and preparing analytics-ready datasets. It focuses on building robust, modular ETL workflows suited for production-scale operations.
+- Ingests 5 years of daily OHLCV (Open, High, Low, Close, Volume) data  
+- Pulls data for multiple tickers from Yahoo Finance  
+- Normalizes raw API responses into a clean relational schema  
+- Loads data into PostgreSQL via SQLAlchemy  
+- Runs as a Docker Compose stack (`db` + `etl` services)  
+- Ensures tables are created automatically on startup  
+- Idempotent ingestion (no duplicates on re-run)
 
 ---
 
 ## Tech Stack
 
-- Cloud storage (AWS S3, Azure Blob or similar)
-- Python for ETL scripting
-- Spark / PySpark or similar distributed processing tools
-- Workflow orchestration (Airflow, Glue Jobs, Step Functions, etc.)
-- Data lake architecture (raw → processed → analytics)
-
----
-
-## Features
-
-- Ingests financial datasets such as transactions, market data, and positions
-- Cleans, validates, transforms, and normalizes raw data
-- Uses multi-zone data lake structure for organized storage
-- Modular pipelines supporting multiple data types
-- Infrastructure automation for deployment repeatability
-- Produces analytics-ready outputs for BI and reporting
+- Python 3  
+- yfinance  
+- pandas  
+- SQLAlchemy  
+- PostgreSQL 16  
+- Pydantic  
+- Docker / Docker Compose  
 
 ---
 
 ## Project Structure
 
-```
-.
-├── infrastructure/       # IaC scripts and deployment automation
-├── pipelines/            # ETL jobs and transformation logic
-├── data/                 # Example input/output data (or references)
-├── analytics/            # Curated output datasets
-└── README.md
-```
+enterprise-financial-data-lake-etl/  
+├─ etl/  
+│  ├─ core/  
+│  ├─ db/  
+│  ├─ pipelines/yahoo/  
+│  ├─ run_pipeline.py  
+│  └─ settings.py  
+├─ Dockerfile  
+├─ docker-compose.yml  
+├─ requirements.txt  
+├─ .env  
+└─ README.md  
 
 ---
 
-## Getting Started
+## Running the Pipeline
 
-### 1. Clone Repository
-```bash
-git clone https://github.com/YSayaovong/enterprise-financial-data-lake-etl.git
-cd enterprise-financial-data-lake-etl
-```
-
-### 2. Configure Environment
-Set cloud credentials, endpoints, and pipeline configuration files.
-
-### 3. Deploy Infrastructure
-Use the files inside `infrastructure/` to provision storage, compute, and orchestration layers.
-
-### 4. Run Pipelines
-Execute scripts inside `pipelines/` to ingest raw data, process it, and populate analytics outputs.
+docker compose down  
+docker compose up --build  
 
 ---
 
-## Potential Enhancements
+## Querying the Database
 
-- Add real-time streaming ingestion
-- Implement data quality validation frameworks
-- Add metadata, lineage, and governance tools
-- Build BI dashboards consuming analytics zone
-- Optimize processing for scale and cost
+docker exec -it enterprise-financial-data-lake-etl-db-1 psql -U finance -d finance_lake
 
 ---
 
 ## License
 
-This project is open-source under the MIT License.
+MIT or your choice.
