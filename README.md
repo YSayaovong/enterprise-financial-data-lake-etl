@@ -145,15 +145,17 @@ Used for historical OHLCV data.
 
 ## ⭐ Why This Project Matters
 
-This project demonstrates your ability to work as both a **Data Engineer and Data Analyst** by combining:
+This project replicates the exact workflow used in modern data teams—ingestion, transformation, storage, and BI reporting—demonstrating readiness for Data Engineering, Analytics Engineering, or Data Analyst roles.
 
-✔ robust ETL architecture  
-✔ clean SQL database modeling  
-✔ automated pipelines  
-✔ visualization and BI storytelling  
-✔ containerized deployment  
+It shows real-world capabilities:
 
-It matches real enterprise data engineering workflows and shows full‑stack analytics capability from ingestion to insights.
+✔ Designing maintainable ETL pipelines
+✔ Building normalized relational models for analytics
+✔ Automating ingestion of high-volume external data
+✔ Using Docker for production-style workflows
+✔ Developing end-to-end dashboards for business stakeholders
+
+This project proves the ability to turn raw financial data into decision-ready insights, exactly what companies expect from a modern data engineer or analyst.
 
 ---
 
