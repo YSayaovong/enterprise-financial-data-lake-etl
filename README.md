@@ -3,7 +3,9 @@
 **Data Engineering + Data Analytics Project**
 
 This project is a fully containerized **Financial Data Lake ETL pipeline** designed for real-world data engineering workflows.  
+
 It extracts historical stock data from Yahoo Finance, transforms it into analytics‑ready tables, and loads it into a PostgreSQL data lake.  
+
 A full **Power BI Analytics Dashboard** visualizes KPIs, trends, and investment insights based on the processed data.
 
 ---
